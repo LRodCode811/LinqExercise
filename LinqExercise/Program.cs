@@ -85,18 +85,44 @@ namespace LinqExercise
 
             foreach (var employee in nameFilter)
             {
-                Console.WriteLine(employee.FirstName);
+                Console.WriteLine(employee.FullName);
             }
-
 
             //Print all the employees' FullName and Age who are over the age 26 to the console.
             //Order this by Age first and then by FirstName in the same result.
+            var overTwentySix = employees.Where(ee => ee.Age > 26)
+                .OrderBy(ee => ee.Age).ThenBy(ee => ee.FirstName);
+
+            Console.WriteLine("Employees Over Twenty-Six");
+
+            foreach (var empl in overTwentySix)
+            {
+                Console.WriteLine($"Age: {empl.Age} Full Name: {empl.FullName}");
+            }
+
 
             //Print the Sum and then the Average of the employees' YearsOfExperience
             //if their YOE is less than or equal to 10 AND Age is greater than 35
+            var yearsAndAge = employees.Where(x => x.YearsOfExperience <= 10 && x.Age > 35);
+            var sumOfYOE = yearsAndAge.Sum(ee => ee.YearsOfExperience);
+            var avgOfYOE = yearsAndAge.Average(ee => ee.YearsOfExperience);
+
+            Console.WriteLine("Employee Avg Experience");
+
+            foreach (var names in yearsAndAge)
+            {
+                Console.WriteLine($"Sum: {sumOfYOE} Avg: {avgOfYOE}");
+            }
 
             //Add an employee to the end of the list without using employees.Add()
+            employees = employees.Append(new Employee("Chris", "Programmer", 46, 1)).ToList();
 
+            Console.WriteLine("Employees List");
+
+            foreach (var newHire in employees)
+            {
+                Console.WriteLine($"{newHire.FirstName} {newHire.LastName} {newHire.Age} {newHire.YearsOfExperience}");
+            }
             
             Console.WriteLine();
 
